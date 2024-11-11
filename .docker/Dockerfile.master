@@ -1,0 +1,34 @@
+FROM node:20
+
+LABEL author="Patrick"
+ENV NPM_CONFIG_LOGLEVEL=warn
+
+ARG USER
+ARG BUILDKIT_STEP_LOG_MAX_SIZE
+
+RUN userdel -r node\
+  && apt-get update -y\
+  && apt-get install net-tools nano nasm iputils-ping -y\
+  && apt-get clean
+
+ENV HOME=/home/$USER
+ENV BACKEND_HOME=$HOME/backend
+ENV FRONTEND_HOME=$HOME/frontend
+
+ENV NODE_ENV=development
+ENV NPM_CONFIG_LOGLEVEL=warn
+
+# setup user home dir & permissions
+RUN groupadd -g 1000 $USER\
+  && useradd -m -u 1000 -d $HOME -g $USER $USER
+
+# setup application directories
+RUN mkdir -vp $BACKEND_HOME
+RUN mkdir -vp $FRONTEND_HOME
+
+RUN mkdir -vp $BACKEND_HOME/node_modules
+RUN mkdir -vp $FRONTEND_HOME/node_modules
+
+RUN chown -R $USER:$USER $HOME
+
+#CMD tail -f /dev/null

@@ -1,0 +1,110 @@
+#
+services:
+  mysql:
+    container_name: mysql
+    image: mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root-pwd
+      - MYSQL_USER=/run/secrets/mysql-user-name
+      - MYSQL_PASSWORD=/run/secrets/mysql-user-pwd
+      - MYSQL_DATABASE=${USER}
+    secrets:
+      - mysql-root-pwd
+      - mysql-user-name
+      - mysql-user-pwd
+    volumes:
+      - ../.volumes/mysql:/var/lib/mysql
+      - ../.volumes/dumps:/mnt/mysql/
+    ports:
+      - 3306:3306
+    networks:
+      - web-network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:${REDIS_PORT}
+    volumes:
+      - ../.volumes/redis:/data
+    command: sh -c 'exec redis-server --save 180 1 --loglevel notice --requirepass "$$REDIS_PWD"'
+    networks:
+      - web-network
+
+  master:
+    container_name: master
+    build:
+      context: ../
+      dockerfile: .docker/Dockerfile.master
+      args:
+        USER: ${USER}
+        BUILDKIT_STEP_LOG_MAX_SIZE: ${BUILDKIT_STEP_LOG_MAX_SIZE}
+    image: master-image
+    volumes:
+      - ../backend:/home/${USER}/backend
+      - backend-node:/home/${USER}/backend/node_modules
+      - ../frontend:/home/${USER}/frontend
+      - frontend-node:/home/${USER}/frontend/node_modules
+      - frontend-cache:/home/${USER}/frontend/.angular
+
+  frontend:
+    container_name: frontend
+    # restart: unless-stopped
+    build:
+      context: ../
+      dockerfile: .docker/Dockerfile.frontend
+      args:
+        USER: ${USER}
+        BUILDKIT_STEP_LOG_MAX_SIZE: ${BUILDKIT_STEP_LOG_MAX_SIZE}
+    volumes:
+      - ../frontend:/home/${USER}/frontend
+    ports:
+      - 4200:4200
+    environment:
+      - PORT=4200
+    networks:
+      - web-network
+    depends_on:
+      - master
+      - backend
+
+  backend:
+    container_name: backend
+    # restart: unless-stopped
+    build:
+      context: ../
+      dockerfile: .docker/Dockerfile.backend
+      args:
+        USER: ${USER}
+        BUILDKIT_STEP_LOG_MAX_SIZE: ${BUILDKIT_STEP_LOG_MAX_SIZE}
+    ports:
+      - 5200:5200
+    environment:
+      - PORT=5200
+    volumes:
+      - ../backend:/home/${USER}/backend
+      - ../frontend/dist/frontend:/home/${USER}/frontend/dist/frontend
+      - ../.volumes/uploads:/home/${USER}/uploads
+    networks:
+      - web-network
+    depends_on:
+      - master
+      - mysql
+
+secrets:
+  mysql-root-pwd:
+    file: ../.volumes/secrets/mysql-root-pwd
+  mysql-user-name:
+    file: ../.volumes/secrets/mysql-user-name
+  mysql-user-pwd:
+    file: ../.volumes/secrets/mysql-user-pwd
+
+networks:
+  web-network:
+    driver: bridge
+
+volumes:
+  frontend-node:
+  frontend-cache:
+  backend-node:

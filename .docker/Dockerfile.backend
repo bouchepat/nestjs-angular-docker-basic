@@ -1,0 +1,25 @@
+FROM master-image
+
+LABEL author="Patrick"
+
+ARG USER
+ARG BUILDKIT_STEP_LOG_MAX_SIZE
+
+COPY --chown=$USER:$USER ../lib $HOME/lib
+COPY --chown=$USER:$USER ../backend/package.json $BACKEND_HOME/package.json
+
+USER $USER
+
+WORKDIR $BACKEND_HOME
+
+RUN rm -rf package-lock.json node_modules/lib
+
+RUN npm i
+
+# RUN npm install --os=linux --cpu=x64 sharp
+# RUN npm rebuild sharp
+
+RUN echo "Starting backend on ${PORT}"
+
+CMD npm run start:dev
+# CMD tail -f /dev/null
