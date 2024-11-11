@@ -16,7 +16,7 @@
 
 1. **Clone the Repository**:
    ```bash
-   git clone git@github.com:bouchepat/nestjs-angular-docker-basic.gite the repository: 
+   git clone git@github.com:bouchepat/nestjs-angular-docker-basic.git
    ```
 
 2. **Create the `.volumes` Folder**: Set up the following structure in a `.volumes` folder in the root directory:
