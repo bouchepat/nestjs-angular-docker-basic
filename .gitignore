@@ -75,3 +75,6 @@ Thumbs.db
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 **/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+**/frontend/src/environments/environment.development.ts
+**/frontend/src/environments/environment.production.ts
