@@ -13,11 +13,7 @@ USER $USER
 WORKDIR $FRONTEND_HOME
 
 RUN rm -rf yarn.lock .angular/cache* node_modules/lib
-
 RUN yarn install
-RUN yarn add @rollup/rollup-linux-x64-gnu@4.22.4
-
-RUN echo "Starting frontend on ${PORT}"
 
 CMD npx ng serve --host 0.0.0.0 --poll=1000
 # CMD tail -f /dev/null

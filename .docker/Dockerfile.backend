@@ -19,7 +19,5 @@ RUN npm i
 # RUN npm install --os=linux --cpu=x64 sharp
 # RUN npm rebuild sharp
 
-RUN echo "Starting backend on ${PORT}"
-
 CMD npm run start:dev
 # CMD tail -f /dev/null
