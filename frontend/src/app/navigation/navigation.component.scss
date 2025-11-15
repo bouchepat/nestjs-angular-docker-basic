@@ -1,0 +1,25 @@
+@import 'custom';
+
+.logo-title {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 12px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: $link-color;
+}
+
+.start {
+  margin-bottom: -4px;
+  margin-right: -14px;
+}
+
+.end {
+  margin-bottom: -4px;
+  margin-left: -15px;
+}
+
+:host-context([data-bs-theme="dark"]) {
+  .logo-title {
+    color: $link-color-dark;
+  }
+}

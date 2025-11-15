@@ -1,0 +1,22 @@
+$nav-link-font-size: 20px;
+
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+// light theme
+$link-color: #138e85;
+$link-hover-color: #117a73;
+
+// dark theme
+$link-color-dark: #ffc107;
+$link-hover-color-dark: #e0a800;
+
+// Light Theme
+$navbar-light-color: #138e85; // Teal
+$navbar-light-hover-color: #117a73; // Darker teal for hover
+$navbar-light-active-color: #0f635b; // Even darker teal for active links
+
+// Dark Theme
+$navbar-dark-color: #ffc107; // Yellow
+$navbar-dark-hover-color: #e0a800; // Darker yellow for hover
+$navbar-dark-active-color: #d39e00; // Even darker yellow for active links
