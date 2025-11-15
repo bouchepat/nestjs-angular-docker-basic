@@ -71,7 +71,7 @@ claude doctor
 
 For more information, visit the [Claude Code Documentation](https://code.claude.com/docs).
 
-## Project Setup:
+## Project Setup
 
 1. **Clone the Repository**:
    ```bash
