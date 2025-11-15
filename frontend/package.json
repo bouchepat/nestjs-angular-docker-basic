@@ -22,6 +22,10 @@
     "@angular/platform-server": "^18.2.12",
     "@angular/router": "^18.2.12",
     "@angular/ssr": "^18.2.12",
+    "@fortawesome/angular-fontawesome": "^0.15.0",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@ng-bootstrap/ng-bootstrap": "^17.0.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
@@ -29,9 +33,13 @@
     "lib": "file:../lib",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.10",
+    "zone.js": "~0.14.10"
+  },
+  "optionalDependencies": {
     "@lmdb/lmdb-linux-x64": "^3.0.13",
-    "@rollup/rollup-linux-x64-gnu": "4.22.4"
+    "@lmdb/lmdb-win32-x64": "^3.0.13",
+    "@rollup/rollup-linux-x64-gnu": "4.22.4",
+    "@rollup/rollup-win32-x64-msvc": "4.22.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.12",

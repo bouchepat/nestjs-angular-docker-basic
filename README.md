@@ -14,6 +14,63 @@
 2. **Angular CLI** (optional): Install the [Angular CLI](https://angular.dev/tools/cli) if you want to scaffold, develop, and maintain Angular applications directly from the command line.
 3. **NestJS CLI** (optional): Install the [NestJS CLI](https://docs.nestjs.com/cli/overview) to initialize, develop, and maintain your Nest applications from the command line.
 
+## Installing Claude Code (AI-Powered Development Tool)
+
+[Claude Code](https://code.claude.com/) is an AI-powered CLI tool that helps with code development, debugging, and automation.
+
+### Prerequisites
+- **OS**: macOS 10.15+, Ubuntu 20.04+/Debian 10+, or Windows 10+ (with WSL or Git Bash)
+- **RAM**: 4GB minimum
+- **Node.js**: 18+ (only required for NPM installation method)
+
+### Installation
+
+**Option 1: Native Install (Recommended)**
+
+For macOS/Linux/WSL:
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+For Windows PowerShell:
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+**Option 2: Homebrew (macOS/Linux)**
+```bash
+brew install --cask claude-code
+```
+
+**Option 3: NPM**
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### Usage
+
+Navigate to your project directory and start Claude Code:
+```bash
+cd treemap-manager
+claude
+```
+
+### Authentication
+
+You'll need to authenticate using one of these methods:
+1. **Claude Console**: Active billing at [console.anthropic.com](https://console.anthropic.com)
+2. **Claude App**: Subscribe to Pro or Max plan
+3. **Enterprise**: Configure Amazon Bedrock or Google Vertex AI
+
+### Verify Installation
+
+Check that Claude Code is installed correctly:
+```bash
+claude doctor
+```
+
+For more information, visit the [Claude Code Documentation](https://code.claude.com/docs).
+
 ## Project Setup
 
 1. **Clone the Repository**:

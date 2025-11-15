@@ -1,19 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { AppService } from '../app.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private user: User | null = null;
   private tokenExpiration: number | null = null;
+  private tokenRefreshInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(private auth: Auth, private appService: AppService) {
     if (!this.appService.isBrowser) return;
 
     this.initializeAuthStateListener();
     this.initializeTokenRefresh();
+  }
+
+  ngOnDestroy(): void {
+    if (this.tokenRefreshInterval) {
+      clearInterval(this.tokenRefreshInterval);
+      this.tokenRefreshInterval = null;
+    }
   }
 
   get User() {
@@ -51,7 +59,7 @@ export class AuthService {
   }
 
   private initializeTokenRefresh(): void {
-    setInterval(() => {
+    this.tokenRefreshInterval = setInterval(() => {
       if (this.shouldRefreshToken()) {
         this.refreshToken();
       }
@@ -63,8 +71,27 @@ export class AuthService {
     if (user) {
       try {
         const token = await user.getIdToken(true); // Force refresh
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT
-        this.tokenExpiration = decodedToken.exp * 1000; // Expiry in ms        
+
+        // Safely decode JWT with error handling
+        try {
+          const parts = token.split('.');
+          if (parts.length !== 3) {
+            throw new Error('Invalid JWT format: expected 3 parts');
+          }
+
+          const decodedToken = JSON.parse(atob(parts[1]));
+
+          if (!decodedToken.exp || typeof decodedToken.exp !== 'number') {
+            throw new Error('Invalid token: missing or invalid exp claim');
+          }
+
+          this.tokenExpiration = decodedToken.exp * 1000; // Expiry in ms
+        } catch (decodeError) {
+          console.error('Error decoding JWT:', decodeError);
+          this.clearToken();
+          return;
+        }
+
         this.saveToken(token);
       } catch (error) {
         console.error('Error refreshing token:', error);

@@ -1,1 +1,6 @@
-<button (click)="toggleTheme()" class="btn btn-secondary"> Toggle Theme </button>
+<div class="btn-group btn-group-sm" role="group" aria-label="Toggle theme">
+  <button (click)="toggleTheme('dark')" type="button" [ngClass]="{'active': CurrentTheme === 'dark'}" class="theme-toggle btn">
+    <fa-icon [icon]="dark" size="lg"></fa-icon></button>
+  <button (click)="toggleTheme('light')" type="button" [ngClass]="{'active': CurrentTheme === 'light'}" class="theme-toggle btn">
+    <fa-icon [icon]="light" size="lg"></fa-icon></button>
+</div>

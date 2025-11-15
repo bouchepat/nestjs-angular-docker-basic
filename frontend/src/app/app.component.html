@@ -1,13 +1,19 @@
-<app-theme-toggle></app-theme-toggle>
-<h1>Test App</h1>
-<nav>
-  <ul>
-    <li>
-      <a routerLink="/">Landing page</a>
-    </li>
-    <li>
-      <a routerLink="/signin">Signin page</a>
-    </li>
-  </ul>
-</nav>
-<router-outlet></router-outlet>
+<app-navigation></app-navigation>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h1>Test App</h1>
+      <!-- <nav>
+        <ul>
+          <li>
+            <a routerLink="/">Landing page</a>
+          </li>
+          <li>
+            <a routerLink="/signin">Signin page</a>
+          </li>
+        </ul>
+      </nav> -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
